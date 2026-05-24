@@ -51,23 +51,23 @@ public class PluginContainer : TerrariaPlugin
             }
         }
 
-        var underworldLayer = Main.UnderworldLayer;
+        var mapHeight = Main.maxTilesY;
         for (var x = 0; x < Main.maxTilesX; x++)
         {
-            for (var y = 0; y < underworldLayer / 2; y++)
+            for (var y = 0; y < mapHeight / 2; y++)
             {
-                if (Main.tile[x, y] != null && Main.tile[x, underworldLayer - 1 - y] != null)
+                if (Main.tile[x, y] != null && Main.tile[x, mapHeight - 1 - y] != null)
                 {
                     var tempTile = (ITile) Main.tile[x, y].Clone();
-                    Main.tile[x, y] = (ITile) Main.tile[x, underworldLayer - 1 - y].Clone();
-                    Main.tile[x, underworldLayer - 1 - y] = tempTile;
+                    Main.tile[x, y] = (ITile) Main.tile[x, mapHeight - 1 - y].Clone();
+                    Main.tile[x, mapHeight - 1 - y] = tempTile;
                 }
             }
         }
 
         for (var x = 0; x < Main.maxTilesX; x++)
         {
-            for (var y = 0; y < underworldLayer; y++)
+            for (var y = 0; y < mapHeight; y++)
             {
                 var tile = Main.tile[x, y];
                 if (tile != null)
@@ -121,7 +121,7 @@ public class PluginContainer : TerrariaPlugin
         if (chest.x >= 0 && chest.x < maxX && chest.y >= 0 && chest.y < maxY)
         {
             // 反转 chest 的位置
-            var newChest = new Chest(chest.index, chest.x, Main.UnderworldLayer - 1 - chest.y - 1) { item = chest.item, maxItems = chest.maxItems };
+            var newChest = new Chest(chest.index, chest.x, Main.maxTilesX - 1 - chest.y - 1) { item = chest.item, maxItems = chest.maxItems };
             return newChest;
         }
 
